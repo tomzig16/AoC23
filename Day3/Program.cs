@@ -31,7 +31,7 @@ namespace Day2
                         if (CheckIfHasASymbolAroundIt(inputTable, i, match.Index, match.Length))
                         {
                             Console.WriteLine(match.Value);
-                            totalSum += int.Parse(match.Value);
+                            totalSum += long.Parse(match.Value);
                         }
                     }
 
@@ -44,9 +44,10 @@ namespace Day2
 
         private static bool CheckIfHasASymbolAroundIt(List<string> inputTable, int matchRow, int firstMatchIndex, int matchLength)
         {
-            string regexForSymbols = @"[!@#$%^&*()_+=/-]";
+            // string regexForSymbols = @"[!@#$%^&*()_+=/-]";
+            string regexForSymbols = "[^0-9.]";
             int startingMatch = firstMatchIndex > 0 ? firstMatchIndex - 1 : 0;
-            int lengthToCheck =  firstMatchIndex + matchLength + 1 > inputTable[matchRow].Length ? matchLength + 1 : matchLength + 2 ;
+            int lengthToCheck =  firstMatchIndex + matchLength + 1 > inputTable[matchRow].Length || firstMatchIndex == 0 ? matchLength + 1 : matchLength + 2 ;
             MatchCollection allMatches;
             string checkedSubstring;
             // Add all top numbers
