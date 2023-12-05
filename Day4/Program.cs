@@ -21,16 +21,15 @@ namespace Day4
                 string actualValues = line.Substring(indexOfColon + 1);
                 string[] winningNumbersVsInputs = actualValues.Split('|');
 
-                string[] winningNumbersSplit = winningNumbersVsInputs[0].Trim().Split(' ');
-                string[] inputNumbersSplit = winningNumbersVsInputs[1].Trim().Split(' ');
+                var splitOptions = StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries;
+                string[] winningNumbersSplit = winningNumbersVsInputs[0].Trim().Split(' ', splitOptions);
+                string[] inputNumbersSplit = winningNumbersVsInputs[1].Trim().Split(' ', splitOptions);
 
                 int winningNumberCount = 0;
                 foreach (var winningNumber in winningNumbersSplit)
                 {
-                    if (winningNumber == "") continue;
                     foreach (var inputNumber in inputNumbersSplit)
                     {
-                        if(inputNumber == "") continue;
                         if (winningNumber == inputNumber)
                         {
                             winningNumberCount++;
