@@ -1,4 +1,5 @@
-﻿using Utils;
+﻿using System.Diagnostics;
+using Utils;
 
 namespace Day5
 {
@@ -39,7 +40,9 @@ namespace Day5
             var inputs = AoCUtils.ReadDaysInput(5);
 
             Console.WriteLine(Part1(inputs));
-            // Console.WriteLine(Part2(inputs));
+            // Part 2 solution is the same as Part 1 just iterating through the numbers.
+            // On Intel i7-9700K 3.60 GHz took 12 minutes on release build to finish.
+            Console.WriteLine(Part2(inputs));
             
         }
 
@@ -65,6 +68,39 @@ namespace Day5
                     minResult = location;
                 }
             }
+
+            return minResult;
+
+        }
+        
+        private static long Part2(List<string> inputs)
+        {
+            long minResult = int.MaxValue;
+            List<long> seeds = new List<long>();
+            Dictionary<string, ConvertingMapping> allMappings = new Dictionary<string, ConvertingMapping>();
+            ParseInput(inputs, out seeds, out allMappings);
+            var timer = new Stopwatch();
+            timer.Start();
+            for (int i = 0; i < seeds.Count; i += 2)
+            {
+                for (long j = seeds[i]; j < seeds[i] + seeds[i + 1]; j++)
+                {
+                    long soil = allMappings["seed-to-soil"].GetNextMapping(j);
+                    long fertilizer = allMappings["soil-to-fertilizer"].GetNextMapping(soil);
+                    long water = allMappings["fertilizer-to-water"].GetNextMapping(fertilizer);
+                    long light = allMappings["water-to-light"].GetNextMapping(water);
+                    long temp = allMappings["light-to-temperature"].GetNextMapping(light);
+                    long humidity = allMappings["temperature-to-humidity"].GetNextMapping(temp);
+                    long location = allMappings["humidity-to-location"].GetNextMapping(humidity);
+                    // Console.WriteLine($"Seed {j} result is {location}");
+                    if (minResult > location)
+                    {
+                        minResult = location;
+                    }
+                }
+            }
+            timer.Stop();
+            Console.WriteLine($"Time spent: {timer.Elapsed.ToString()}");
 
             return minResult;
 
@@ -103,9 +139,5 @@ namespace Day5
             }
         }
         
-        private static int Part2(List<string> inputs)
-        {
-            return 0;
-        }
     }
 }
