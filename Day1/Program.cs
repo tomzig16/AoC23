@@ -72,6 +72,7 @@ namespace Day1
                 //     {
                 //         smallestMatch.index = match.Index;
                 //         smallestMatch.length = match.Length;
+                //         smallestMatceh.length = match.Length;
                 //         smallestMatch.SetNumericalValueFromString(line.Substring(smallestMatch.index, smallestMatch.length));
                 //     }
                 //
