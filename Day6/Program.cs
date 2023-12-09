@@ -5,10 +5,16 @@ namespace Day6
 {
     class Program
     {
-        struct RaceDetails(string durationString, string distanceString)
+        struct RaceDetails
         {
-            public long duration = long.Parse(durationString);
-            public long distance = long.Parse(distanceString);
+            public long duration;
+            public long distance;
+
+            public RaceDetails(string durationString, string distanceString)
+            {
+                duration = long.Parse(durationString);
+                distance = long.Parse(distanceString);
+            }
         }
         static void Main(string[] args)
         {
